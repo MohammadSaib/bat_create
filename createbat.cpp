@@ -2,10 +2,10 @@
 #include<string_view>
 #include<string>
 #include<fstream>
-using namespace std;
+// using namespace std;
 
 template<size_t N>
-bool exit_instructed(const string_view (&exit_options)[N], const string& input)
+bool exit_instructed(const std::string_view (&exit_options)[N], const std::string& input)
 {
     for(const string_view i : exit_options)
     {
@@ -15,12 +15,12 @@ bool exit_instructed(const string_view (&exit_options)[N], const string& input)
     return false;
 }
 
-bool create_file(const string& path, const string& launcher_name, const string& file_name)
+bool create_file(const std::string& path, const std::string& launcher_name, const std::string& file_name)
 {
-    ofstream file("D:\\LaunchApps\\" + file_name + ".bat");
+    std::ofstream file("D:\\LaunchApps\\" + file_name + ".bat");
     if(!file.is_open())
     {
-        cout << "File was not created\n";
+        std::cout << "File was not created\n";
         return false;
     }
     file << "@echo off\n";
@@ -32,28 +32,28 @@ bool create_file(const string& path, const string& launcher_name, const string& 
 
 int main()
 {
-    constexpr string_view exit_options[] = {
+    constexpr std::string_view exit_options[] = {
         "exit","Exit","EXIT",
         "quit","Quit","QUIT"
     };
-    string input = "";
-    string path = "";
-    string launcher_name = "";
-    string file_name = "";
+    std::string input = "";
+    std::string path = "";
+    std::string launcher_name = "";
+    std::string file_name = "";
     bool exit_condition = false;
     bool created_file = false;
 
     while(true)
     {
-        cout<<"Enter the path: ";
-        getline(cin, input);
+        std::cout<<"Enter the path: ";
+        std::getline(std::cin, input);
 
         if(exit_instructed(exit_options, input))
             break;
         
         if(input[1] != ':')
         {
-            cout<<"Entered path format is wrong.\nEnter correct path format.\n\n";
+            std::cout<<"Entered path format is wrong.\nEnter correct path format.\n\n";
             continue;
         }
 
@@ -61,16 +61,16 @@ int main()
 
         while(true)
         {
-            cout<<"Enter launcher name: ";
-            getline(cin,input);
+            std::cout<<"Enter launcher name: ";
+            std::getline(std::cin,input);
 
             if(exit_instructed(exit_options, input))
                 break;
 
             if(input.substr(input.length()-4,input.length()) != ".exe")
             {
-                cout<<"Entered file format is wrong."<<endl;
-                cout<<"Enter correct file format."<<endl;
+                std::cout<<"Entered file format is wrong.\n";
+                std::cout<<"Enter correct file format.\n";
                 continue;
             }
 
@@ -80,8 +80,8 @@ int main()
         if(exit_instructed(exit_options, input))
             break;
 
-        cout<<"Enter File Name: ";
-        cin>>input;
+        std::cout<<"Enter File Name: ";
+        std::cin>>input;
 
         if(exit_instructed(exit_options, input))
             break;

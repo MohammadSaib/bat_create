@@ -88,7 +88,7 @@ int main()
             break;
 
         std::cout<<"Enter File Name: ";
-        std::cin>>input;
+            std::getline(std::cin,input);
 
         if(exit_instructed(exit_options, input))
             break;

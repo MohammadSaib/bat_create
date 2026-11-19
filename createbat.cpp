@@ -30,19 +30,35 @@ bool exit_instructed(const std::string_view (&exit_options)[N], const std::strin
     return false;
 }
 
+bool check_existing_file(std::string file)
+{
+    return std::ifstream(file).is_open();
+}
+
 bool create_file(const std::string& path, const std::string& launcher_name, const std::string& file_name)
 {
-    std::ofstream file("D:\\LaunchApps\\" + file_name + ".bat");
-    if(!file.is_open())
+    if(check_existing_file("D:\\LaunchApps\\" + file_name + ".bat"))
     {
-        std::cout << "File was not created\n";
-        return false;
+        char confirm;
+        std::cout << "File already exists\n";
+        std::cout << "Do you want to overwrite it?(y/n): ";
+        std::cin >> confirm;
+        if('y' == confirm)
+        {
+            std::ofstream file("D:\\LaunchApps\\" + file_name + ".bat");
+            if(!file.is_open())
+            {
+                std::cout << "File was not created\n";
+                return false;
+            }
+            file << "@echo off\n";
+            file << "start \"\" /b /d \"" << path << "\\\" \"" << launcher_name << "\" %*";
+            file.close();
+            return file.good();
+        }
     }
-    file << "@echo off\n";
-    file << "start \"\" /b /d \"" << path << "\\\" \"" << launcher_name << "\" %*";
-    file.close();
 
-    return file.good();
+    return true;
 }
 
 int main()

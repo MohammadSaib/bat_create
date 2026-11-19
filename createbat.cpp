@@ -51,7 +51,11 @@ int main()
         if(exit_instructed(exit_options, input))
             break;
         
-        if(input[1] != ':')
+        if(
+            input.size()<3 ||
+            input[1] != ':' ||
+            input[2] != '\\' && input[2] != '/'
+        )
         {
             std::cout<<"Entered path format is wrong.\nEnter correct path format.\n\n";
             continue;
@@ -67,7 +71,10 @@ int main()
             if(exit_instructed(exit_options, input))
                 break;
 
-            if(input.substr(input.length()-4,input.length()) != ".exe")
+            if(
+                input.size() < 4 ||
+                input.compare(input.size()-4, 4, ".exe") != 0
+            )
             {
                 std::cout<<"Entered file format is wrong.\n";
                 std::cout<<"Enter correct file format.\n";

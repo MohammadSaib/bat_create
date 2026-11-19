@@ -2,7 +2,6 @@
 #include<string_view>
 #include<string>
 #include<fstream>
-// using namespace std;
 
 void trim(std::string& input)
 {
@@ -56,8 +55,6 @@ int main()
     std::string path = "";
     std::string launcher_name = "";
     std::string file_name = "";
-    bool exit_condition = false;
-    bool created_file = false;
 
     while(true)
     {
@@ -113,8 +110,7 @@ int main()
             break;
         file_name = input;
 
-        created_file = create_file(path, launcher_name, file_name);
-        if(!created_file)
+        if(!create_file(path, launcher_name, file_name))
             continue;
         break;
     }

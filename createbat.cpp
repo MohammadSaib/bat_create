@@ -4,6 +4,22 @@
 #include<fstream>
 // using namespace std;
 
+void trim(std::string& input)
+{
+    const std::string whitespaces = "\t\n\r\f\v";
+
+    size_t start = input.find_first_not_of(whitespaces);
+    if (start == std::string::npos)
+    {
+        input.clear();
+        return;
+    }
+
+    size_t end = input.find_last_not_of(whitespaces);
+    input.erase(end+1);
+    input.erase(0,start);
+}
+
 template<size_t N>
 bool exit_instructed(const std::string_view (&exit_options)[N], const std::string& input)
 {
@@ -47,6 +63,7 @@ int main()
     {
         std::cout<<"Enter the path: ";
         std::getline(std::cin, input);
+        trim(input);
 
         if(exit_instructed(exit_options, input))
             break;
@@ -67,6 +84,7 @@ int main()
         {
             std::cout<<"Enter launcher name: ";
             std::getline(std::cin,input);
+            trim(input);
 
             if(exit_instructed(exit_options, input))
                 break;
@@ -88,7 +106,8 @@ int main()
             break;
 
         std::cout<<"Enter File Name: ";
-            std::getline(std::cin,input);
+        std::getline(std::cin,input);
+        trim(input);
 
         if(exit_instructed(exit_options, input))
             break;
